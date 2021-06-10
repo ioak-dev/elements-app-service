@@ -1,4 +1,4 @@
-"""mockback URL Configuration
+"""elements URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.2/topics/http/urls/
@@ -27,5 +27,6 @@ urlpatterns = [
     path('space/', include('app.space.urls')),
     path('user/<str:space_id>/', include('app.user.urls')),
     path('site/', include('app.site.urls')),
+    path('document/', include('app.document.urls')),
     path('role/<str:space_id>/', include('app.role.urls')),
 ]

@@ -1,9 +1,9 @@
-version: '3.4'
+version: "3.4"
 
 services:
-  mockbackservice:
-    image: mockbackservice:latest
-    container_name: mockbackservice
+  elementsservice:
+    image: elementsservice:latest
+    container_name: elementsservice
     restart: always
     # depends_on:
     #   - mongo
@@ -18,8 +18,8 @@ services:
     networks:
       ioak-net:
         aliases:
-          - mockbackservice.docker
+          - elementsservice.docker
 
 networks:
   ioak-net:
-      name: ioak-network
+    name: ioak-network

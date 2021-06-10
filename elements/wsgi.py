@@ -1,5 +1,5 @@
 """
-WSGI config for mockback project.
+WSGI config for elements project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -8,11 +8,11 @@ https://docs.djangoproject.com/en/2.2/howto/deployment/wsgi/
 """
 
 import os
-import mockback.startup as startup
+import elements.startup as startup
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mockback.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'elements.settings')
 
 startup.run()
 application = get_wsgi_application()

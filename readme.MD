@@ -15,6 +15,6 @@
 
 ## Procfile Honcho for celery
 
-web: gunicorn mockback.wsgi --log-file
-worker1: celery -A mockback beat -l info
-worker2: celery -A mockback worker -l info
+web: gunicorn elements.wsgi --log-file
+worker1: celery -A elements beat -l info
+worker2: celery -A elements worker -l info

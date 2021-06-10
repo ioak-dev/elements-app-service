@@ -10,7 +10,7 @@ from django.core.files.storage import default_storage
 DATABASE_URI = os.environ.get('DATABASE_URI')
 
 domain = 'space'
-self_space_id = 'mockback'
+self_space_id = 'elements'
 
 def do_create(data):
     updated_record = db_utils.upsert(self_space_id, domain, data)
