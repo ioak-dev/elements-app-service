@@ -12,6 +12,9 @@ ONEAUTH_APPSPACE_ID = os.environ.get('ONEAUTH_APPSPACE_ID')
 if ONEAUTH_API_URL is None:
     ONEAUTH_API_URL = 'http://127.0.0.1:8020'
 
+if ONEAUTH_APPSPACE_ID is None:
+    ONEAUTH_APPSPACE_ID = '211'
+
 ONEAUTH_API_URL = ONEAUTH_API_URL + '/auth/'
 
 self_space_id = 'elements'

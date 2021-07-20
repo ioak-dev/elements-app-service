@@ -18,6 +18,11 @@ def get_all(request, space_id):
         response = service.find_all(request, space_id)
         return JsonResponse(response[1], status=response[0])
 
+@api_view(['POST'])
+def authorize_user(request, space_id):
+    response = service.authorize_user(request, space_id)
+    return JsonResponse(response[1], status=response[0])
+
 @api_view(['GET'])
 def permittedActions(request, space_id):
     response = service.find_permitted_actions(space_id, request.user_id)
