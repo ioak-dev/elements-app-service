@@ -14,7 +14,7 @@ services:
       - 8065:8065
     environment:
       MONGODB_URI: mongodb://mongo.docker:27017
-      ONEAUTH_API_URL: https://api.ioak.io:8010
+      ONEAUTH_API_URL: https://api.ioak.io:8010/api
       ONEAUTH_APPSPACE_ID: 210
     networks:
       ioak-net:
