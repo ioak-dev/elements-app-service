@@ -8,16 +8,12 @@ import app.sequence.service as sequence_service
 
 DATABASE_URI = os.environ.get('DATABASE_URI')
 ONEAUTH_API_URL = os.environ.get('ONEAUTH_API_URL')
-ONEAUTH_APPSPACE_ID = os.environ.get('ONEAUTH_APPSPACE_ID')
 if ONEAUTH_API_URL is None:
     ONEAUTH_API_URL = 'http://127.0.0.1:8020'
 
-if ONEAUTH_APPSPACE_ID is None:
-    ONEAUTH_APPSPACE_ID = '211'
-
 ONEAUTH_API_URL = ONEAUTH_API_URL + '/auth/'
 
-self_space_id = 'elements'
+self_space_id = 'mocker'
 domain="user"
 
 def do_jwttest(space_id):
@@ -66,16 +62,15 @@ def do_signin_via_jwt(space_id, data):
         'secret': 'none'
     })
 
-def get_session(auth_key):
+def get_session(space_id, auth_key):
     start_time = int(round(time.time() * 1000))
-    response = requests.get(ONEAUTH_API_URL + 'appspace/' + ONEAUTH_APPSPACE_ID + '/session/' + auth_key)
+    response = requests.get(ONEAUTH_API_URL + 'space/' + space_id + '/session/' + auth_key)
     if response.status_code != 200:
-        print(response)
         return (response.status_code, response.json())
     oa_response = jwt_utils.decode(response.json()['token'])
-    existing_user_data = user_service.find_by_user_id(oa_response['userId'])
+    existing_user_data = user_service.find_by_user_id(space_id, oa_response['userId'])
     if len(existing_user_data) == 1:
-        updated_record = user_service.update_user({
+        updated_record = user_service.update_user(space_id, {
             '_id': existing_user_data[0]['_id'],
             'firstName': oa_response['firstName'],
             'lastName': oa_response['lastName'],
@@ -84,11 +79,14 @@ def get_session(auth_key):
         updated_record['token'] = response.json()['token']
         return (200, {'data': updated_record})
     else:
-        new_data = user_service.insert_user({
+        if user_service.is_first_user(space_id):
+            sequence_service.create_sequence(space_id, 'userColor', '', 1)
+        new_data = user_service.insert_user(space_id, {
             '_id': oa_response['userId'],
             'firstName': oa_response['firstName'],
             'lastName': oa_response['lastName'],
-            'email': oa_response['email']
+            'email': oa_response['email'],
+            'color': 'color_' + str((sequence_service.nextval(space_id, 'userColor', '') % 10) + 1)
         })
         new_data['token'] = response.json()['token']
         return (200, {'data': new_data})
